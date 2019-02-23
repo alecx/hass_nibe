@@ -1,5 +1,6 @@
 import logging
 
+from datetime import timedelta
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.exceptions import PlatformNotReady
@@ -30,6 +31,8 @@ PLATFORM_SCHEMA.extend({
 })
 
 discovered_entities = set()
+SCAN_INTERVAL = timedelta(seconds=60)
+PARALLEL_UPDATES = 15
 
 
 async def async_setup_platform(hass,

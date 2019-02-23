@@ -49,6 +49,11 @@ class NibeParameterEntity(NibeEntity):
         return True
 
     @property
+    def force_update(self):
+        """Write each update to the state machine, even if the data is the same"""
+        return True
+
+    @property
     def device_state_attributes(self):
         """Return the state attributes."""
         if self._data:
@@ -86,8 +91,10 @@ class NibeParameterEntity(NibeEntity):
     async def async_update(self):
         """Fetch new state data for the sensor."""
         try:
+            _LOGGER.debug("update started for %s", self._parameter_id)
             data = await self._uplink.get_parameter(self._system_id,
                                                     self._parameter_id)
+            _LOGGER.debug("update finished for %s", self._parameter_id)
             self.parse_data(data)
         except BaseException:
             self.parse_data(None)

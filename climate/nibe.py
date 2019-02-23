@@ -1,6 +1,7 @@
 import logging
 import asyncio
 
+from datetime import timedelta
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.exceptions import PlatformNotReady
@@ -36,6 +37,8 @@ PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_ADJUST): cv.positive_int,
     vol.Optional(CONF_OBJECTID): cv.string,
 })
+SCAN_INTERVAL = timedelta(seconds=60)
+PARALLEL_UPDATES = 5
 
 
 async def async_setup_platform(hass,
